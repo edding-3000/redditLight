@@ -1,8 +1,25 @@
-# React + Vite
+# redditLight :alien:
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+redditLight is an application to dive deeper into React and Redux. The application will allow users to view and search posts and comments provided by the [Reddit](https://www.reddit.com) API.
 
-Currently, two official plugins are available:
+This project is the second result of the Codecademy Full-Stack course. Only the basic structure for the project was given, but not the code or the design itself.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Future features :sparkles:
+
+- Users can use the application on any device (desktop to mobile)
+- Users can use the application on any modern browser
+- Users can access your application at a URL
+- Users see an initial view of the data when first visiting the app
+- Users can search the data using terms
+- Users can filter the data based on categories that are predefined
+- Users are shown a detailed view (modal or new page/route) when they select an item
+- Users are delighted with a cohesive design system
+- Users are delighted with animations and transitions
+
+## Build with :construction:
+
+This Project is build with React in Vite. It uses Redux Toolkit and [React Loading Skeleton](https://www.npmjs.com/package/react-loading-skeleton)
+
+## Infos :information_source:
+
+[My portfolio: hausersebastian.de](www.hausersebastian.de)
