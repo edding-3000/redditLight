@@ -1,33 +1,20 @@
-import { useEffect } from 'react';
-import './App.css';
-import Reddit from './redditAPI/reddit';
+import "./App.css";
+import useRateLimitReset from "./app/rateLimitObserver";
+import Feed from "./components/feed/Feed";
 
 function App() {
-
-  useEffect(() => {
-    // console.log(Reddit.rateLimitTime);
-    let rateTimer;
-    if (Reddit.rateLimitTime > 0) {
-      rateTimer = setTimeout(() => {
-        localStorage.removeItem("rateLimitSet");
-        localStorage.removeItem("rateLimitTime");
-        localStorage.removeItem("numOfFetches");
-      }, Reddit.rateLimitTime);
-    } else {
-      localStorage.removeItem("rateLimitSet");
-      localStorage.removeItem("rateLimitTime");
-      localStorage.removeItem("numOfFetches");
-      clearTimeout(rateTimer);
-    }
-
-    return () => {
-      clearTimeout(rateTimer);
-    };
-  }, [])
+  useRateLimitReset();
 
   return (
     <>
-      <p>There is content :)</p>
+      <header>
+        <aside>
+          <nav></nav>
+        </aside>
+      </header>
+      <main>
+        <Feed />
+      </main>
     </>
   )
 }
