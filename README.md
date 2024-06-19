@@ -18,7 +18,23 @@ This project is the second result of the Codecademy Full-Stack course. Only the 
 
 ## Build with :construction:
 
-This Project is build with React in Vite. It uses Redux Toolkit and [React Loading Skeleton](https://www.npmjs.com/package/react-loading-skeleton)
+This project is build with React in Vite. 
+
+### Redux
+
+This project uses Redux Toolkit and [React Loading Skeleton](https://www.npmjs.com/package/react-loading-skeleton)
+
+### react-loading-skeleton
+
+### react-reddit-video
+
+This project uses the (video.js)[https://videojs.com] framework together with a (modified) script called (react-reddit-video)[https://www.npmjs.com/package/react-reddit-video] written by (scripton)[https://www.npmjs.com/~scripton] to play Reddit videos. 
+
+Code of react-reddit-video script is modified so that "RedditVideo" can use "appendContainer" props to insert the videoplayer of video.js into a specified container. 
+
+Also inserted a funktionality into RedditVideo to play videos when they are intersecting the viewport and stop them otherwise. Adjustable with props:
+* playWhenIntersecting => true or false
+* threshold => Number between 0 and 1  
 
 ## Infos :information_source:
 

@@ -1,0 +1,107 @@
+.postContainer {
+    max-width: 100vw;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    border-radius: var(--borderRadius);
+    padding: 5px 15px;
+}
+
+.postContainer:hover {
+    background-color: var(--grey);
+}
+
+.creditBar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    font-size: small;
+    letter-spacing: 0.02em;
+    color: var(--ultraLightGrey);
+
+    a {
+        color: var(--ultraLightGrey);
+        text-decoration: none;
+    }
+
+    a:hover {
+        color: var(--color);
+        text-decoration: none;
+    }
+}
+
+
+.creditBar::before {
+    --cirRadius: 30px;
+    content: attr(data-letter);
+    background-image: var(--profileImg);
+    background-size: cover;
+    background-position: center;
+    font-size: 1.5em;
+    text-transform: uppercase;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: var(--cirRadius);
+    height: var(--cirRadius);
+    border-radius: calc(var(--cirRadius)/2);
+    color: var(--blue);
+    background-color: var(--color);
+}
+
+.postContainer span h2 {
+    line-height: 1.2;
+}
+
+.mediaContainer {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    z-index: 1;
+
+    img,
+    video {
+        max-width: 100%;
+        max-height: 90vh;
+        aspect-ratio: auto;
+        /* border-radius: var(--borderRadius); */
+    }
+}
+
+
+.mediaContainer:has(img, video) {
+    justify-content: center;
+    align-items: center;
+    border-radius: var(--borderRadius);
+    background-color: black;
+    overflow: hidden;
+}
+
+.mediaContainer::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: var(--bgSrc);
+    background-size: cover;
+    background-position: center;
+    filter: blur(20px) brightness(0.4);
+    -webkit-filter: blur(20px) brightness(0.4);
+    z-index: -1;
+}
+
+.vjs-big-play-button {
+    border: none !important;
+    aspect-ratio: 1 / 1;
+    width: 70px !important;
+    height: auto !important;
+    border-radius: var(--borderRadius) !important;
+}
+
+.vjs-icon-placeholder:before {
+    position: relative !important;
+    width: auto !important;
+    height: auto !important;
+}
