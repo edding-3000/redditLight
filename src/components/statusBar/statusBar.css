@@ -1,0 +1,70 @@
+.message {
+    position: fixed;
+    top: -100px;
+    left: 5px;
+    right: 5px;
+    z-index: 99;
+    min-width: 0;
+    max-width: 100%;
+    margin: 0 auto;
+    border: var(--borderWidth) solid;
+    border-radius: var(--borderRadius);
+    font-weight: 500;
+    transition: top .25s;
+}
+
+.message span.statusBarContent {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.message span.statusBarContent span {
+    position: absolute;
+    left: 50%;
+    bottom: 50%;
+    transform: translate(-50%, 50%);
+}
+
+.message.fadeIn {
+    top: 10px;
+}
+
+.message.error {
+    background-color: var(--errorBg);
+    border-color: var(--errorBorder);
+}
+
+.message.success {
+    background-color: var(--successBg);
+    border-color: var(--successBorder);
+}
+
+.message button {
+    transition: background-color .25s;
+    width: 10px;
+    aspect-ratio: 1/1;
+    display: flex;
+    justify-content: center;
+    margin-right: auto;
+    border-radius: var(--borderRadius);
+    border: none;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.message button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+@supports (backdrop-filter: blur()) {
+    .message.error {
+        backdrop-filter: blur(5px);
+        background-color: rgb(255 71 86 / 75%);
+    }
+
+    .message.success {
+        backdrop-filter: blur(2px);
+        background-color: rgb(50 172 89 / 75%);
+    }
+}

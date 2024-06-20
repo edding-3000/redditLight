@@ -21,7 +21,6 @@
   --borderWidth: 2px;
   --borderRadius: 20px;
 
-
   color-scheme: light dark;
   color: var(--color);
   background-color: var(--background);
@@ -51,7 +50,7 @@ a:hover {
 body,
 html {
   width: 100vw;
-  overflow-x: hidden;
+  box-sizing: border-box;
 }
 
 body {

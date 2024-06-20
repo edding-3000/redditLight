@@ -2,6 +2,8 @@ import timeAgo from "../../utilitys/timeAgo";
 import "./post.css";
 import RedditVideo from "../../utilitys/react-reddit-video";
 import { useEffect, useRef } from "react";
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 
 export default function Post(props) {
     const { post } = props;
@@ -15,7 +17,7 @@ export default function Post(props) {
     const link = post.post_hint == "link" ? post.url : "";
     const selfText = post.selftext ? post.selftext : "";
     const is_video = post.is_video;
-    const videoUrl = post.is_video ? post.media.reddit_video.fallback_url : "";
+    const videoUrl = post.is_video ? post.media.reddit_video.hls_url : "";
     const imgUrl = post.post_hint == "image" ? post.preview ? post.url : "" : "";
 
     const upVotes = post.ups;
@@ -28,7 +30,16 @@ export default function Post(props) {
         : { style: { "--profileImg": `url(${iconUrl})` } } // else render pic
 
     const containerElement = useRef(null);
-    // const videoElement = useRef(null);
+
+    function UrlExists(url) {
+        let http = new XMLHttpRequest();
+        http.open('HEAD', url, false);
+        http.send();
+        return http.status != 404;
+    }
+
+    if (!UrlExists(imgUrl)) return ("");
+    if (is_video && !videoUrl) return ("");
 
     return (
         <>
@@ -45,16 +56,16 @@ export default function Post(props) {
                     {imgUrl ? <img src={imgUrl} loading="lazy" /> : ""} {/*image*/}
                     {/* {is_video ? <video controls loop autoplay="autoplay"><source src={videoUrl} /></video> : ""} hosted:video */}
                     {is_video
-                        ? containerElement.current && (
+                        ? containerElement.current ? (
                             <RedditVideo
-                                HLSurl={props.post.media.reddit_video.hls_url}
+                                HLSurl={videoUrl}
                                 appendContainer={containerElement.current}
                                 width="100%"
                                 height="90vh"
                                 playWhenIntersecting="true"
                                 threshold="0.3"
                             />
-                        )
+                        ) : <Skeleton height={"90vh"} />
                         : ""} {/*hosted:video*/}
                 </span>
                 <span>

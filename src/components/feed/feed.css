@@ -1,8 +1,10 @@
 .feed {
+    position: relative;
     display: flex;
     flex-direction: column;
     gap: 15px;
+    width: 100%;
+    min-width: 0;
     max-width: 800px;
-    margin: 0 auto;
     padding: 0 5px;
 }

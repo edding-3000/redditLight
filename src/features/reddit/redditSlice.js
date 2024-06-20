@@ -21,6 +21,8 @@ export const redditSlice = createSlice({
             state.rateLimmit = false;
         },
         reachedRateLimit: (state) => {
+            state.isLoading = false;
+            state.error = false;
             state.rateLimmit = true;
         },
         resetRateLimit: (state) => {
@@ -41,7 +43,7 @@ export default redditSlice.reducer;
 
 export const fetchPosts = (subreddit = "") => async (dispatch, getState) => {
     const state = getState();
-    if (state.reddit.rateLimmit) return;
+    if (state.reddit.rateLimmit) return state.reddit.posts;
     try {
         dispatch(loadingRedditPosts());
         const posts = await Reddit.getSubReddit(subreddit);
