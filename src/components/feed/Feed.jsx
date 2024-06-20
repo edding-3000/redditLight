@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectRedditPosts, fetchPosts } from "../../features/reddit/redditSlice";
 import Post from "../post/Post";
@@ -15,17 +15,6 @@ function Feed(props) {
     useEffect(() => {
         dispatch(fetchPosts(""));
     }, [dispatch]);
-
-    const [showStatusBar, setShowStatusBar] = useState(false);
-
-    useEffect(() => {
-        if (rateLimmit) {
-            setShowStatusBar(true);
-        } else {
-            const timeout = setTimeout(() => { setShowStatusBar(false); }, 250);
-            return () => clearTimeout(timeout);
-        }
-    }, [rateLimmit]);
 
     if (isLoading) {
         return (
@@ -46,11 +35,9 @@ function Feed(props) {
     return (
         <div className="feed">
             {/* {rateLimmit ? <StatusBar type="error" message={`Ratelimit reached. New limmit in`}><Countdown duration={Reddit.rateLimitTime} /></StatusBar> : ""} */}
-            {showStatusBar ?
-                <StatusBar type="error" statusClass={rateLimmit} message={`Ratelimit reached. New limit in`}>
-                    <Countdown duration={Reddit.rateLimitTime} />
-                </StatusBar>
-                : null}
+            <StatusBar type="error" statusClass={rateLimmit} message={`Ratelimit reached. New limit in`}>
+                <Countdown duration={Reddit.rateLimitTime} />
+            </StatusBar>
             {posts.map((post, index) => (
                 <Post
                     key={index}

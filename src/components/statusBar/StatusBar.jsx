@@ -1,21 +1,35 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import "./statusBar.css";
 
-export default function StatusBar(props) {
-    const { message, type, statusClass, children } = props;
-
-    const [toggleVisibility, setToggleVisibility] = useState(false);
-    const hideStatusBar = useRef(null);
-
-    function handleClick() {
-        setToggleVisibility(true);
-    }
+/**
+ * StatusBar Component
+ * @param {string} type - "error" or "success"
+ * @param {string} message - Message to display inside StatusBar
+ * @param {boolean} statusClass - When true shows StatusBar, when false hides it
+ * @returns StatusBar element
+ */
+export default function StatusBar({ type, message, statusClass, children }) {
+    const [showStatusBar, setShowStatusBar] = useState(false);
 
     useEffect(() => {
-        setToggleVisibility(false);
-    }, [statusClass])
+        if (statusClass) {
+            setShowStatusBar(true);
+        } else {
+            const timeout = setTimeout(() => {
+                setShowStatusBar(false);
+            }, 250);
+            return () => clearTimeout(timeout);
+        }
+    }, [statusClass]);
 
     return (
-        <div ref={hideStatusBar} className={`message ${type} ${toggleVisibility ? "" : statusClass ? "fadeIn" : ""}`}><span className="statusBarContent"><button onClick={handleClick}>X</button><span>{message} {children}</span></span></div>
-    )
+        showStatusBar && (
+            <div className={`message ${type} ${statusClass ? "fadeIn" : ""}`}>
+                <span className="statusBarContent">
+                    <button onClick={() => setShowStatusBar(false)}>X</button>
+                    <span>{message} {children}</span>
+                </span>
+            </div>
+        )
+    );
 }
