@@ -29,6 +29,7 @@
 
 .message.fadeIn {
     top: 10px;
+    top: var(--headerHeight);
 }
 
 .message.error {

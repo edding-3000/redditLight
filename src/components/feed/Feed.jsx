@@ -19,7 +19,7 @@ function Feed(props) {
     if (isLoading) {
         return (
             <div className="feed">
-                <h1>Loading...</h1>
+                <h2>Loading...</h2>
             </div>
         )
     }
@@ -27,7 +27,7 @@ function Feed(props) {
     if (error) {
         return (
             <div className="feed">
-                <h1>Error</h1>
+                <h2>Error</h2>
             </div>
         )
     }

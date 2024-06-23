@@ -9,6 +9,7 @@ export const redditSlice = createSlice({
         posts: [],
         rateLimmit: false,
         selectedSubreddit: "",
+        searchQuery: "",
     },
     reducers: {
         loadingRedditPosts: (state) => {
@@ -34,11 +35,19 @@ export const redditSlice = createSlice({
             state.error = false;
             console.log(action.payload);
             state.posts = action.payload;
+        },
+
+        storeSearchQuery: (state, action) => {
+            state.searchQuery = action.payload;
+        },
+
+        setSelectedSubreddit: (state, action) => {
+            state.selectedSubreddit = action.payload;
         }
     }
 });
 
-export const { loadingRedditPosts, errorLoadingRedditPosts, getRedditPosts, reachedRateLimit, resetRateLimit } = redditSlice.actions;
+export const { loadingRedditPosts, errorLoadingRedditPosts, getRedditPosts, reachedRateLimit, resetRateLimit, storeSearchQuery, setSelectedSubreddit } = redditSlice.actions;
 export default redditSlice.reducer;
 
 export const fetchPosts = (subreddit = "") => async (dispatch, getState) => {

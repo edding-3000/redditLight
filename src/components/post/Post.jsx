@@ -1,9 +1,22 @@
 import timeAgo from "../../utilitys/timeAgo";
 import "./post.css";
 import RedditVideo from "../../utilitys/react-reddit-video";
-import { useEffect, useRef } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
+
+function UrlExists(url) {
+    return new Promise((resolve) => {
+        let http = new XMLHttpRequest();
+        http.open('HEAD', url, true); // true für asynchron
+        http.onreadystatechange = function () {
+            if (http.readyState === 4) {
+                resolve(http.status != 404 && http.status != 403);
+            }
+        };
+        http.send();
+    });
+}
 
 export default function Post(props) {
     const { post } = props;
@@ -30,46 +43,68 @@ export default function Post(props) {
         : { style: { "--profileImg": `url(${iconUrl})` } } // else render pic
 
     const containerElement = useRef(null);
+    const [isContainerReady, setIsContainerReady] = useState(false);
 
-    function UrlExists(url) {
-        let http = new XMLHttpRequest();
-        http.open('HEAD', url, false);
-        http.send();
-        return http.status != 404;
+    useEffect(() => {
+        if (containerElement.current && !isContainerReady) {
+            setIsContainerReady(true);
+        }
+    });
+
+    const [imgExists, setImgExists] = useState(false);
+    const [videoExists, setVideoExists] = useState(false);
+
+    useEffect(() => {
+        const checkUrls = async () => {
+            const imgCheck = await UrlExists(imgUrl);
+            setImgExists(imgCheck);
+
+            if (is_video) {
+                const videoCheck = await UrlExists(videoUrl);
+                setVideoExists(videoCheck);
+                const secondVideoCheck = await UrlExists(post.media.reddit_video.fallback_url);
+                setVideoExists(secondVideoCheck);
+            }
+        };
+
+        checkUrls();
+    }, [imgUrl, is_video, videoUrl]);
+
+    if (!imgExists || (is_video && !videoExists)) {
+        return null;
     }
-
-    if (!UrlExists(imgUrl)) return ("");
-    if (is_video && !videoUrl) return ("");
 
     return (
         <>
             <span className="postContainer">
                 <span className="creditBar" {...profilePic}>
-                    <p><a href={`https://www.reddit.com/${subReddit}`} target="_blank">{subReddit}</a> · <a href={`https://www.reddit.com/user/${author}`} target="_blank">{author}</a> · {timeAgo(created)}</p>
+                    <p><a href={`https://www.reddit.com/${subReddit}`} target="_blank">{subReddit}</a> • <a href={`https://www.reddit.com/user/${author}`} target="_blank">{author}</a> • {timeAgo(created)}</p>
                 </span>
                 <span>
                     <h2>{titleText}</h2>
                 </span>
                 <span ref={containerElement} className="mediaContainer textWrapPretty" style={imgUrl ? { "--bgSrc": `url(${imgUrl})` } : {}}>
-                    {selfText ? <p>{selfText}</p> : ""}
+                    {selfText ? <p className="selfText">{selfText}</p> : ""}
                     {link ? <a href={link} target="_blank" rel="noopener noreferrer">{link}</a> : ""}{/*link*/}
                     {imgUrl ? <img src={imgUrl} loading="lazy" /> : ""} {/*image*/}
                     {/* {is_video ? <video controls loop autoplay="autoplay"><source src={videoUrl} /></video> : ""} hosted:video */}
-                    {is_video
-                        ? containerElement.current ? (
-                            <RedditVideo
-                                HLSurl={videoUrl}
-                                appendContainer={containerElement.current}
-                                width="100%"
-                                height="90vh"
-                                playWhenIntersecting="true"
-                                threshold="0.3"
-                            />
-                        ) : <Skeleton height={"90vh"} />
-                        : ""} {/*hosted:video*/}
+                    {is_video ? isContainerReady ? (
+                        <RedditVideo
+                            HLSurl={videoUrl}
+                            appendContainer={containerElement.current}
+                            width="100%"
+                            height="90vh"
+                            playWhenIntersecting="true"
+                            threshold="0.3"
+                        />
+                    ) : (
+                        <Skeleton height={"90vh"} />
+                    ) :
+                        ""}
                 </span>
-                <span>
-                    {/* Buttons for Comments and up/downvotes */}
+                <span className="postInteraction">
+                    <span className="postButton"><button>↑</button>{upVotes}<button>↓</button></span>
+                    <span className="postButton"><button>{comments}</button></span>
                 </span>
             </span>
         </>

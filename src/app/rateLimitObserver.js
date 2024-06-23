@@ -14,21 +14,32 @@ const useRateLimitReset = () => {
         dispatch(resetRateLimit());
     }
 
+    // useEffect(() => {
+    //     let rateTimer;
+    //     if (Reddit.rateLimitTime > 0) {
+    //         rateTimer = setTimeout(() => {
+    //             resetRateLimitSorage();
+    //         }, Reddit.rateLimitTime);
+    //     }
+
+    //     return () => {
+    //         clearTimeout(rateTimer);
+    //     };
+    // }, []);
+
     useEffect(() => {
         let rateTimer;
-        if (Reddit.rateLimitTime > 0) {
+        if (Reddit.numOfFetches > 0 && Reddit.rateLimitTime) {
+            console.log("countling...")
             rateTimer = setTimeout(() => {
                 resetRateLimitSorage();
             }, Reddit.rateLimitTime);
-        } else {
-            resetRateLimitSorage();
-            clearTimeout(rateTimer);
         }
 
         return () => {
             clearTimeout(rateTimer);
         };
-    }, []);
+    }, [Reddit.numOfFetches]);
 };
 
 export default useRateLimitReset;

@@ -7,4 +7,5 @@
     min-width: 0;
     max-width: 800px;
     padding: 0 5px;
+    top: calc(var(--headerHeight) + 20px);
 }

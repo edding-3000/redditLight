@@ -5,6 +5,10 @@
     gap: 15px;
     border-radius: var(--borderRadius);
     padding: 5px 15px;
+
+    span h2 {
+        line-height: 1.2;
+    }
 }
 
 .postContainer:hover {
@@ -17,6 +21,7 @@
     align-items: center;
     gap: 10px;
     font-size: small;
+    font-weight: 500;
     letter-spacing: 0.02em;
     color: var(--ultraLightGrey);
 
@@ -51,10 +56,6 @@
     background-color: var(--color);
 }
 
-.postContainer span h2 {
-    line-height: 1.2;
-}
-
 .mediaContainer {
     display: flex;
     flex-direction: column;
@@ -67,6 +68,10 @@
         max-height: 90vh;
         aspect-ratio: auto;
         /* border-radius: var(--borderRadius); */
+    }
+
+    .selfText {
+        color: var(--colorBodycopy);
     }
 }
 
@@ -90,6 +95,27 @@
     filter: blur(20px) brightness(0.4);
     -webkit-filter: blur(20px) brightness(0.4);
     z-index: -1;
+}
+
+.postContainer .postInteraction {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+
+    .postButton {
+        border-radius: var(--borderRadius);
+        background-color: var(--midGrey);
+        display: inline-block;
+    }
+
+    button {
+        border-radius: var(--borderRadius);
+        background-color: transparent;
+    }
+
+    button:hover {
+        background-color: rgba(255, 255, 255, .1);
+    }
 }
 
 .vjs-big-play-button {

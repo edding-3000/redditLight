@@ -1,6 +1,11 @@
 #root {
   max-width: 100vw;
   display: flex;
+}
+
+main {
+  width: -webkit-fill-available;
+  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;

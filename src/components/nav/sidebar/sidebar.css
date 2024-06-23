@@ -1,0 +1,47 @@
+aside {
+    position: sticky;
+    top: var(--headerHeight);
+    bottom: 0;
+    z-index: 98;
+    transform: translateX(-100%);
+    height: calc(100svh - var(--headerHeight));
+    min-width: 20vw;
+    max-width: 350px;
+    background-color: var(--background);
+    transition: transform .25s;
+    height: 100svh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+
+    nav {
+
+        ul {
+            padding: 0 15px;
+            overflow: hidden;
+
+            li {
+                list-style-type: none;
+
+                button {
+                    border: 0;
+                    border-radius: 10px;
+                    display: block;
+                    background-color: transparent;
+                    width: 100%;
+                    text-align: left;
+                }
+
+                button:hover {
+                    background-color: var(--grey);
+                }
+            }
+
+        }
+    }
+}
+
+aside.open {
+    transform: translateX(0);
+}
