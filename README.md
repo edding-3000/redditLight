@@ -28,7 +28,7 @@ This project uses Redux Toolkit and [React Loading Skeleton](https://www.npmjs.c
 
 ### react-reddit-video
 
-This project uses the (video.js)[https://videojs.com] framework together with a (modified) script called (react-reddit-video)[https://www.npmjs.com/package/react-reddit-video] written by (scripton)[https://www.npmjs.com/~scripton] to play Reddit videos. 
+This project uses the [video.js](https://videojs.com) framework together with a (modified) script called [react-reddit-video](https://www.npmjs.com/package/react-reddit-video) written by [scripton](https://www.npmjs.com/~scripton) to play Reddit videos. 
 
 Code of react-reddit-video script is modified so that "RedditVideo" can use "appendContainer" props to insert the videoplayer of video.js into a specified container. 
 
