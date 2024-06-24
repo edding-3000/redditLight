@@ -12,6 +12,7 @@ export default function StatusBar({ type, message, statusClass, children }) {
     const [showStatusBar, setShowStatusBar] = useState(false);
 
     useEffect(() => {
+        console.log("statusClass", statusClass);
         if (statusClass) {
             setShowStatusBar(true);
         } else {

@@ -2,8 +2,8 @@ import timeAgo from "../../utilitys/timeAgo";
 import "./post.css";
 import RedditVideo from "../../utilitys/react-reddit-video";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import Skeleton from 'react-loading-skeleton'
-import 'react-loading-skeleton/dist/skeleton.css'
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 function UrlExists(url) {
     return new Promise((resolve) => {
@@ -110,3 +110,5 @@ export default function Post(props) {
         </>
     )
 }
+
+// https://v.redd.it/0c9dycbpob7d1/HLS_480.ts

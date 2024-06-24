@@ -72,6 +72,8 @@
 
     .selfText {
         color: var(--colorBodycopy);
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 }
 

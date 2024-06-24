@@ -1,33 +1,41 @@
 import { useDispatch, useSelector } from "react-redux";
-import { fetchSubreddits, selectSubreddits } from "../../../features/reddit/subRedditSlice";
+import { fetchSubreddits, selectSubreddits, subRedditsLoading } from "../../../features/reddit/subRedditSlice";
 import { useEffect } from "react";
 import "./sidebar.css";
 import { setSelectedSubreddit } from "../../../features/reddit/redditSlice";
+import Skeleton from "react-loading-skeleton";
+import 'react-loading-skeleton/dist/skeleton.css';
+import NavLinkSkeleton from "../navLinkSkeleton/NavLinkSkeleton";
 
 export default function SideBar({ menueOpen }) {
     const dispatch = useDispatch();
+    const subRedditLoading = useSelector(subRedditsLoading)
 
     const subreddits = useSelector(selectSubreddits);
     useEffect(() => {
         dispatch(fetchSubreddits());
-    }, [dispatch]);
+        console.log(subreddits)
+    }, []);
 
     return (
         <aside className={menueOpen ? "open" : ""}>
             <nav>
                 <ul>
-                    {console.log(subreddits)}
-                    {subreddits.map((subreddit, index) => (
-                        <li
-                            key={index}
-                            {...subreddit.icon_img.length === 0 ? { 'data-letter': subreddit.title[0] } : { style: { "--profileImg": `url(${subreddit.icon_img})` } }}
-                        >
-                            <button type="button">
-                                {/* onClick={() => dispatch(setSelectedSubreddit(subreddit.url))} */}
-                                {subreddit.display_name_prefixed}
-                            </button>
-                        </li>
-                    ))}
+                    {subreddits && !subRedditLoading ?
+                        subreddits.map((subreddit, index) => (
+                            <li key={index} >
+                                <button type="button"
+                                    onClick={() => dispatch(setSelectedSubreddit(subreddit.display_name_prefixed))}
+                                >
+                                    <span className="subredditIcon" {...subreddit.icon_img ? { style: { "--profileImg": `url(${subreddit.icon_img})` } } : ""} >
+                                        {subreddit.icon_img.length === 0 ? subreddit.title[0] : ""}
+                                    </span>
+                                    <span className="subredditName">{subreddit.display_name_prefixed}</span>
+                                </button>
+                            </li>
+                        ))
+                        : <NavLinkSkeleton num={10} />
+                    }
                 </ul>
             </nav>
         </aside>)

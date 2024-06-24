@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import Reddit from "../../redditAPI/reddit";
+import { increasRateLimit, reachedRateLimit } from "./redditSlice";
 
 export const subRedditSlice = createSlice({
     name: "subReddits",
@@ -31,12 +32,24 @@ export const subRedditSlice = createSlice({
 export const { loadSubReddits, errorLoadingSubReddit, getSubReddits } = subRedditSlice.actions;
 export default subRedditSlice.reducer;
 export const selectSubreddits = (state) => state.subReddits.subReddits;
+export const subRedditsLoading = (state) => state.subReddits.isLoading;
+export const subRedditError = (state) => state.subReddits.error;
+export const subRedditErrorMessage = (state) => state.subReddits.errorMessage;
 
 export const fetchSubreddits = () => async (dispatch, getState) => {
+    const state = getState();
+    if (state.reddit.rateLimitNum >= 10) {
+        dispatch(reachedRateLimit());
+        if (state.reddit.subReddits && state.reddit.subReddits.length > 0) {
+            return state.reddit.subReddits;
+        }
+    }
+
     try {
         dispatch(loadSubReddits());
         const subReddits = await Reddit.getSubReddits();
         dispatch(getSubReddits(subReddits));
+        dispatch(increasRateLimit());
     }
     catch (e) {
         console.log(e);

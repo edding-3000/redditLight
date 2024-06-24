@@ -5,8 +5,12 @@
 
 main {
   width: -webkit-fill-available;
+  min-width: 0;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  min-height: 100svh;
+  padding: 0 5px;
 }

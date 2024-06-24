@@ -1,45 +1,27 @@
 import Reddit from "../redditAPI/reddit";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { resetRateLimit } from "../features/reddit/redditSlice";
+import { fetchPosts, resetRateLimit, getRemainingTimeRateLimit } from "../features/reddit/redditSlice";
 
 const useRateLimitReset = () => {
     const dispatch = useDispatch();
-
-    const resetRateLimitSorage = () => {
-        console.log("New Limit");
-        localStorage.removeItem("rateLimitSet");
-        localStorage.removeItem("rateLimitTime");
-        localStorage.removeItem("numOfFetches");
-        dispatch(resetRateLimit());
-    }
-
-    // useEffect(() => {
-    //     let rateTimer;
-    //     if (Reddit.rateLimitTime > 0) {
-    //         rateTimer = setTimeout(() => {
-    //             resetRateLimitSorage();
-    //         }, Reddit.rateLimitTime);
-    //     }
-
-    //     return () => {
-    //         clearTimeout(rateTimer);
-    //     };
-    // }, []);
+    const { selectedSubreddit, rateLimitNum, remainingTimeRateLimit } = useSelector((store) => store.reddit);
 
     useEffect(() => {
+        dispatch(getRemainingTimeRateLimit());
         let rateTimer;
-        if (Reddit.numOfFetches > 0 && Reddit.rateLimitTime) {
+        if (rateLimitNum > 0 && remainingTimeRateLimit) {
             console.log("countling...")
             rateTimer = setTimeout(() => {
-                resetRateLimitSorage();
-            }, Reddit.rateLimitTime);
+                if (rateLimitNum >= 10) dispatch(fetchPosts(selectedSubreddit));
+                dispatch(resetRateLimit());
+            }, remainingTimeRateLimit);
         }
 
         return () => {
             clearTimeout(rateTimer);
         };
-    }, [Reddit.numOfFetches]);
+    }, [rateLimitNum]);
 };
 
 export default useRateLimitReset;

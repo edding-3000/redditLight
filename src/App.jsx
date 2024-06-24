@@ -1,3 +1,4 @@
+import { SkeletonTheme } from "react-loading-skeleton";
 import "./App.css";
 import useRateLimitReset from "./app/rateLimitObserver";
 import Feed from "./components/feed/Feed";
@@ -7,12 +8,14 @@ function App() {
   useRateLimitReset();
 
   return (
-    <>
-      <Navigation />
-      <main>
-        <Feed />
-      </main>
-    </>
+    <SkeletonTheme baseColor="#222222" highlightColor="#292929">
+      <>
+        <Navigation />
+        <main>
+          <Feed />
+        </main>
+      </>
+    </SkeletonTheme>
   )
 }
 
