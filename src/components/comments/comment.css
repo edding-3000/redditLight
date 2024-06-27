@@ -1,0 +1,50 @@
+.comments div .commentBody:first-of-type {
+    margin-bottom: 15px;
+}
+
+.commentBody {
+    margin-left: 15px;
+    border-left: 1px solid gray;
+    padding-left: 15px;
+    margin-bottom: 15px;
+
+    .creditBar {
+        transform: translateX(-30px);
+    }
+
+    .creditBar::before {
+        background-color: var(--background);
+        border: .3px solid var(--midGrey);
+    }
+
+    .hideShowButton {
+        padding: 0;
+        border: none;
+        margin-left: calc(18px/2);
+    }
+}
+
+.commentHead {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 15px;
+    font-size: smaller;
+    color: var(--ultraLightGrey);
+
+    a {
+        color: var(--ultraLightGrey);
+        font-weight: 600;
+    }
+}
+
+.commentVotes {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+}
+
+.flex-center {
+    display: flex;
+    align-items: center;
+}

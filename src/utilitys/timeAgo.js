@@ -2,7 +2,9 @@ export default function timeAgo(timestamp) {
     const now = Math.floor(Date.now() / 1000);
     const secondsPast = now - timestamp;
 
-    if (secondsPast < 60) {
+    if (!timestamp) {
+        return "-"
+    } else if (secondsPast < 60) {
         return `${secondsPast} second${secondsPast == 1 ? '' : 's'} ago`;
     } else if (secondsPast < 3600) {
         const minutes = Math.floor(secondsPast / 60);

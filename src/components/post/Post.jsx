@@ -1,9 +1,12 @@
 import timeAgo from "../../utilitys/timeAgo";
 import "./post.css";
 import RedditVideo from "../../utilitys/react-reddit-video";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
+import { useDispatch, useSelector } from "react-redux";
+import { fetchComments } from "../../features/reddit/redditSlice";
+import Comments from "../comments/Comments";
 
 function UrlExists(url) {
     return new Promise((resolve) => {
@@ -18,8 +21,12 @@ function UrlExists(url) {
     });
 }
 
-export default function Post(props) {
-    const { post } = props;
+export default function Post({ post, commentId, setCommentId }) {
+    const dispatch = useDispatch()
+    const comments = useSelector((state) => state.reddit.comments);
+    const [commentsOpen, setCommentsOpen] = useState(false);
+
+    const id = post.id;
 
     const iconUrl = post.sr_detail ? post.sr_detail.icon_img : "";
     const subReddit = post.subreddit_name_prefixed;
@@ -34,7 +41,8 @@ export default function Post(props) {
     const imgUrl = post.post_hint == "image" ? post.preview ? post.url : "" : "";
 
     const upVotes = post.ups;
-    const comments = post.num_comments;
+    const commentsNum = post.num_comments;
+    const permaLink = post.permalink;
     const postUrl = post.url;
     const created = post.created;
 
@@ -74,9 +82,19 @@ export default function Post(props) {
         return null;
     }
 
+    const loadComments = () => {
+        if (!commentsOpen) {
+            if (commentId !== id) {
+                dispatch(fetchComments(permaLink));
+            }
+            setCommentId(id);
+            setCommentsOpen(true);
+        } else setCommentsOpen(false);
+    }
+
     return (
         <>
-            <span className="postContainer">
+            <span className="postContainer" data-id={id}>
                 <span className="creditBar" {...profilePic}>
                     <p><a href={`https://www.reddit.com/${subReddit}`} target="_blank">{subReddit}</a> • <a href={`https://www.reddit.com/user/${author}`} target="_blank">{author}</a> • {timeAgo(created)}</p>
                 </span>
@@ -104,11 +122,12 @@ export default function Post(props) {
                 </span>
                 <span className="postInteraction">
                     <span className="postButton"><button>↑</button>{upVotes}<button>↓</button></span>
-                    <span className="postButton"><button>{comments}</button></span>
+                    <span className="postButton"><button onClick={loadComments}>{commentsNum}</button></span>
                 </span>
             </span>
+            {commentId === id && commentsOpen && <span className="comments">
+                <Comments comments={comments} />
+            </span>}
         </>
     )
 }
-
-// https://v.redd.it/0c9dycbpob7d1/HLS_480.ts

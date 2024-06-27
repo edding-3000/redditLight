@@ -13,6 +13,10 @@ export const redditSlice = createSlice({
         remainingTimeRateLimit: false,
         selectedSubreddit: "",
         searchQuery: "",
+
+        loadComments: false,
+        errorComments: false,
+        comments: []
     },
     reducers: {
         loadingRedditPosts: (state) => {
@@ -24,6 +28,15 @@ export const redditSlice = createSlice({
             state.error = true;
             state.rateLimit = false;
         },
+        getRedditPosts: (state, action) => {
+            state.rateLimit = false;
+            state.isLoading = false;
+            state.error = false;
+            console.log(action.payload);
+            state.posts = action.payload;
+        },
+
+
         increasRateLimit: (state) => {
             state.rateLimitNum += 1;
             if (!state.rateLimitTime || state.rateLimitTime == 0) {
@@ -46,32 +59,61 @@ export const redditSlice = createSlice({
         getRemainingTimeRateLimit: (state) => {
             state.remainingTimeRateLimit = state.rateLimitTime > 0 ? 60000 - (Date.now() - state.rateLimitTime) : false;
         },
-        getRedditPosts: (state, action) => {
-            state.rateLimit = false;
-            state.isLoading = false;
-            state.error = false;
-            console.log(action.payload);
-            state.posts = action.payload;
-        },
 
         storeSearchQuery: (state, action) => {
             state.selectedSubreddit = "";
             state.searchQuery = action.payload;
         },
-
         setSelectedSubreddit: (state, action) => {
             state.searchQuery = "";
             state.selectedSubreddit = action.payload;
         },
-
         resetSearchAndSubreddit: (state) => {
             state.searchQuery = "";
             state.selectedSubreddit = "";
+        },
+
+        loadComments: (state) => {
+            state.loadComments = true;
+            state.errorComments = false;
+        },
+        errorComments: (state) => {
+            state.loadComments = false;
+            state.errorComments = true;
+        },
+        getComments: (state, action) => {
+            state.loadComments = false;
+            state.errorComments = false;
+            state.comments = action.payload;
+        },
+
+        cleanupStore: (state) => {
+            state.searchQuery = "";
+            state.selectedSubreddit = "";
+            state.posts = [];
+            state.comments = [];
         }
     }
 });
 
-export const { loadingRedditPosts, errorLoadingRedditPosts, getRedditPosts, increasRateLimit, reachedRateLimit, resetRateLimit, remainingTimeRateLimit, getRemainingTimeRateLimit, storeSearchQuery, setSelectedSubreddit, resetSearchAndSubreddit } = redditSlice.actions;
+export const {
+    loadingRedditPosts,
+    errorLoadingRedditPosts,
+    getRedditPosts,
+    increasRateLimit,
+    reachedRateLimit,
+    resetRateLimit,
+    remainingTimeRateLimit,
+    getRemainingTimeRateLimit,
+    storeSearchQuery,
+    setSelectedSubreddit,
+    resetSearchAndSubreddit,
+    loadComments,
+    errorComments,
+    getComments,
+    cleanupStore
+} = redditSlice.actions;
+
 export default redditSlice.reducer;
 
 export const fetchPosts = (subreddit = "") => async (dispatch, getState) => {
@@ -103,6 +145,22 @@ export const fetchSearchQuery = (searchQuery) => async (dispatch, getState) => {
         dispatch(increasRateLimit());
     } catch (e) {
         dispatch(errorLoadingRedditPosts());
+    }
+}
+
+export const fetchComments = (permaLink) => async (dispatch, getState) => {
+    const state = getState();
+    if (state.reddit.rateLimitNum >= 10) {
+        dispatch(reachedRateLimit());
+    }
+    try {
+        dispatch(loadComments());
+        const comments = await Reddit.getComments(permaLink);
+        // console.log("comments", comments);
+        dispatch(getComments(comments));
+        dispatch(increasRateLimit());
+    } catch (e) {
+        dispatch(errorComments());
     }
 }
 

@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectRedditPosts, fetchPosts, getRemainingTimeRateLimit, fetchSearchQuery } from "../../features/reddit/redditSlice";
 import Post from "../post/Post";
@@ -12,6 +12,8 @@ function Feed(props) {
     const posts = useSelector(selectRedditPosts);
     const { isLoading, error, rateLimit, selectedSubreddit, remainingTimeRateLimit, searchQuery } = useSelector(state => state.reddit);
     const dispatch = useDispatch();
+
+    const [commentId, setCommentId] = useState("");
 
     useEffect(() => {
         dispatch(fetchPosts(selectedSubreddit));
@@ -45,6 +47,8 @@ function Feed(props) {
                 <Post
                     key={index}
                     post={post}
+                    commentId={commentId}
+                    setCommentId={setCommentId}
                 />
             ))}
         </div>

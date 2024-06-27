@@ -1,12 +1,11 @@
 import * as mockJson from "./mockData.json";
 
 const Reddit = {
-    _url: "https://www.reddit.com/",
+    _url: "https://www.reddit.com",
 
     async getSubReddit(subReddit = "") {
         try {
-            console.log(`${this._url}${subReddit}.json?sr_detail=1`);
-            const response = await fetch(`${this._url}${subReddit}.json?sr_detail=1`, { method: 'GET', });
+            const response = await fetch(`${this._url}/${subReddit}.json?sr_detail=1`, { method: 'GET', });
 
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status} Message: ${response.message}`);
@@ -23,7 +22,7 @@ const Reddit = {
 
     async getSubReddits() {
         try {
-            const response = await fetch(`${this._url}subreddits/popular.json?sr_detail=1`, { method: 'GET', });
+            const response = await fetch(`${this._url}/subreddits/popular.json?sr_detail=1`, { method: 'GET', });
 
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status} Message: ${response.message}`);
@@ -39,14 +38,14 @@ const Reddit = {
 
     async getComments(permalink) {
         try {
-            const response = await fetch(`${this._url}r/${permalink}.json?sr_detail=1`, { method: 'GET', });
+            const response = await fetch(`${this._url}${permalink}.json?sr_detail=1`, { method: 'GET', });//&limit=20
 
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status} Message: ${response.message}`);
             }
 
             const json = await response.json();
-            return json.data.children.map((post) => post.data);
+            return json[1].data.children.map((comment) => comment);
         } catch (error) {
             console.error('Error while fetching comments from Reddit:', error);
             throw new Error(error);
@@ -55,14 +54,13 @@ const Reddit = {
 
     async searchRequest(searchQuery) {
         try {
-            const response = await fetch(`${this._url}search.json?q=${encodeURIComponent(searchQuery)}&sr_detail=1`, { method: 'GET', });
+            const response = await fetch(`${this._url}/search.json?q=${encodeURIComponent(searchQuery)}&sr_detail=1`, { method: 'GET', });
 
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status} Message: ${response.message}`);
             }
 
             const json = await response.json();
-            console.log("?", json);
             return json.data.children.map((post) => post.data);
         } catch (error) {
             console.error('Error while fetching searchdata from Reddit:', error);
