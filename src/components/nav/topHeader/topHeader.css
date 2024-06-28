@@ -12,20 +12,111 @@ header {
         width: 100%;
         position: relative;
         display: flex;
+        align-items: center;
+        margin: 0 15px;
 
         #menue {
-            display: none;
+            height: 35px;
+            padding: 0 15px;
+        }
+
+        span {
+            display: flex;
+            align-items: center;
+        }
+
+        .headerLeft {
+            justify-content: space-between;
+            gap: 15px;
+            height: 100%;
+            min-width: 0;
+            transition: min-width var(--transitionDuration);
+            transition-property: min-width, background-color;
+            background-color: transparent;
+            -webkit-box-shadow: none;
+            -moz-box-shadow: none;
+            box-shadow: none;
+
+            &.open {
+                background-color: var(--navBackground);
+                min-width: calc(var(--sideBarWidth) - 30px);
+                -webkit-box-shadow: 0px 0px 20px 8px rgba(17, 17, 18, 0.9);
+                -moz-box-shadow: 0px 0px 20px 8px rgba(17, 17, 18, 0.9);
+                box-shadow: 0px 0px 20px 8px rgba(17, 17, 18, 0.9);
+            }
+        }
+
+        .headerRight {
+            width: 100%;
+            flex: 1;
+            align-items: center;
+            padding-left: 15px;
+
+            /* &.open {
+                padding-left: var(--sideBarWidth);
+            } */
+
+            h1 {
+
+                button {
+                    background-color: transparent;
+                    padding-left: 15px;
+                    padding-right: 15px;
+                }
+            }
+
+            &.open form {
+                --halfSidebar: calc(50% - var(--sideBarWidth)/2);
+                --ahHalfSidebar: calc(-50% + var(--sideBarWidth));
+                left: var(--halfSidebar);
+                transform: translate(var(--ahHalfSidebar), -50%);
+            }
+
+            form {
+                transition-duration: var(--transitionDuration);
+                transition-property: left, transform;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                min-width: 0;
+                max-width: 800px;
+                border-radius: var(--borderRadius);
+                background-color: var(--midGrey);
+
+                input {
+                    border: none;
+                    border-radius: var(--borderRadius);
+                    height: 35px;
+                    padding: 0 15px;
+                    background-color: transparent;
+                }
+
+                input:focus,
+                input:focus-visible {
+                    outline: none;
+                }
+
+                input[type="submit"] {
+                    border-top-right-radius: 0;
+                    border-bottom-right-radius: 0;
+                }
+
+                input[type="text"] {
+                    border-top-left-radius: 0;
+                    border-bottom-left-radius: 0;
+                    width: 300px;
+                }
+            }
         }
     }
 
-    div form {
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%);
-        min-width: 0;
-        max-width: 800px;
-        padding: 0 5px;
+    div form:has(input:focus),
+    div form:has(input:focus-visible) {
+        outline-color: -webkit-focus-ring-color;
+        outline-style: auto;
+        outline-width: 5px;
+        background-color: var(--grey);
     }
 
     button {
@@ -40,8 +131,7 @@ header {
 }
 
 @media screen and (max-width: 750px) {
-    header div #menue {
+    /* header div #menue {
         display: inline-block;
-    }
-
+    } */
 }

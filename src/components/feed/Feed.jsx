@@ -23,7 +23,7 @@ function Feed(props) {
 
     if (isLoading) {
         return (
-            <div style={{ width: "-webkit-fill-available", position: "relative", top: "var(--headerHeight)" }}>
+            <div style={{ width: "-webkit-fill-available", maxWidth: "800px", position: "relative", top: "var(--headerHeight)" }}>
                 <PostSkeleton num={3} />
             </div>
         )

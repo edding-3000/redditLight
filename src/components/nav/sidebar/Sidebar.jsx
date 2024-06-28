@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSubreddits, selectSubreddits, subRedditsLoading } from "../../../features/reddit/subRedditSlice";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import "./sidebar.css";
 import { setSelectedSubreddit } from "../../../features/reddit/redditSlice";
 import Skeleton from "react-loading-skeleton";
@@ -17,8 +17,15 @@ export default function SideBar({ menueOpen }) {
         console.log(subreddits)
     }, []);
 
+    // Set width of sidebar as css var
+    const ref = useRef(null)
+
+    useEffect(() => {
+        if (ref.current.clientWidth > 0) document.documentElement.style.setProperty("--sideBarWidth", ref.current.clientWidth + "px");
+    });
+
     return (
-        <aside className={menueOpen ? "open" : ""}>
+        <aside className={menueOpen ? "open" : ""} ref={ref}>
             <nav>
                 <ul>
                     {subreddits && !subRedditLoading ?

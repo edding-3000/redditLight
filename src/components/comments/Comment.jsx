@@ -2,6 +2,7 @@ import { minidenticon } from "minidenticons";
 import timeAgo from "../../utilitys/timeAgo";
 import CommentList from "./CommentList";
 import { useState } from "react";
+import MarkdownView from "react-showdown";
 
 const Comment = ({ comment }) => {
     if (comment.body) {
@@ -17,7 +18,7 @@ const Comment = ({ comment }) => {
             <div className={`commentBody`} id={comment.id} data-commentid={comment.id}>
                 <span>
                     <span className="creditBar" style={{ "--profileImg": `url("${img}")` }}><p><a href={`https://www.reddit.com/user/${comment.author}`}>{comment.author}</a> • {timeAgo(comment.created)}</p></span>
-                    <p style={{ marginLeft: "12px" }}>{comment.body}</p>
+                    <span style={{ marginLeft: "12px" }}>{<MarkdownView markdown={comment.body} options={{ emoji: true, headerLevelStart: 4, simplifiedAutoLink: true }} />}</span>
                     <span style={{ display: "flex", alignItems: "center" }}>
                         <span className="commentVotes"><button>↑</button><p>{comment.score}</p><button>↓</button></span>
                     </span>

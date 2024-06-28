@@ -77,6 +77,28 @@
         color: var(--colorBodycopy);
         overflow: hidden;
         text-overflow: ellipsis;
+        max-width: 100%;
+
+        hr {
+            border-width: .1px;
+            border-color: var(--grey);
+        }
+    }
+
+    .selfText div :first-child {
+        margin-top: 0;
+    }
+
+    .selfText div :last-child {
+        margin-bottom: 0;
+    }
+
+    .selfText div>* {
+        margin: 1rem 0;
+    }
+
+    .widthHundert {
+        width: 100%;
     }
 }
 
@@ -116,6 +138,11 @@
     button {
         border-radius: var(--borderRadius);
         background-color: transparent;
+    }
+
+    .postButton:last-child button {
+        display: flex;
+        gap: 5px;
     }
 
     button:hover {

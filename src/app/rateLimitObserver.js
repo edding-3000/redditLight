@@ -21,7 +21,7 @@ const useRateLimitReset = () => {
         return () => {
             clearTimeout(rateTimer);
         };
-    }, [rateLimitNum]);
+    }, [dispatch, rateLimitNum]);
 };
 
 export default useRateLimitReset;

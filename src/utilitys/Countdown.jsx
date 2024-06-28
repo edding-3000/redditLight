@@ -11,6 +11,10 @@ const Countdown = ({ duration }) => {
     };
 
     useEffect(() => {
+        setRemainingTime(duration);
+    }, [duration]);
+
+    useEffect(() => {
         const interval = setInterval(() => {
             setRemainingTime((prevTime) => {
                 if (prevTime <= 1000) {
@@ -23,7 +27,7 @@ const Countdown = ({ duration }) => {
 
         // Cleanup-Function, um den Interval zu löschen, wenn die Komponente unmountet wird
         return () => clearInterval(interval);
-    }, []);
+    }, [duration]);
 
     return (
         <>

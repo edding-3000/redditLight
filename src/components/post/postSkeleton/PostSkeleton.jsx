@@ -15,7 +15,7 @@ const PostSkeleton = ({ num }) => {
                     <Skeleton height={"30px"} width={"100px"} />
                 </span>
                 <span className="mediaContainer">
-                    <Skeleton height={"70vh"} />
+                    <Skeleton height={"70vh"} containerClassName="widthHundert" />
                 </span>
                 <span className="postInteraction">
                     <Skeleton height={"30px"} width={"100px"} />

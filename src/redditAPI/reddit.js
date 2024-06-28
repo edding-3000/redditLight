@@ -15,7 +15,7 @@ const Reddit = {
             return json.data.children.map((post) => post.data);
             // return mockJson.data.children.map((post) => post.data);
         } catch (error) {
-            console.error('Error while fetching subreddit with name ' + subReddit + ' from Reddit:', error);
+            console.error('Error while fetching subreddit with name: ' + subReddit + ' from Reddit:', error);
             throw new Error(error);
         }
     },

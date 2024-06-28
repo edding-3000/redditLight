@@ -4,7 +4,7 @@ import Sidebar from "./sidebar/Sidebar";
 
 export default function Navigation() {
 
-    const [menueOpen, setMenueOpen] = useState(false);
+    const [menueOpen, setMenueOpen] = useState(true);
 
     function toggleMenue() {
         menueOpen ? setMenueOpen(false) : setMenueOpen(true);
@@ -12,7 +12,7 @@ export default function Navigation() {
 
     return (
         <>
-            <TopHeader toggleMenue={toggleMenue} />
+            <TopHeader toggleMenue={toggleMenue} menueOpen={menueOpen} />
             <Sidebar menueOpen={menueOpen} />
         </>
     )
