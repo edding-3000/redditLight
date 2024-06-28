@@ -7,6 +7,11 @@ header {
     width: 100%;
     display: flex;
     flex-direction: row;
+    padding: 5px 0;
+
+    * {
+        font-size: 1.1em !important;
+    }
 
     div {
         width: 100%;
@@ -40,9 +45,9 @@ header {
             &.open {
                 background-color: var(--navBackground);
                 min-width: calc(var(--sideBarWidth) - 30px);
-                -webkit-box-shadow: 0px 0px 20px 8px rgba(17, 17, 18, 0.9);
-                -moz-box-shadow: 0px 0px 20px 8px rgba(17, 17, 18, 0.9);
-                box-shadow: 0px 0px 20px 8px rgba(17, 17, 18, 0.9);
+                -webkit-box-shadow: 0px 0px 20px 20px rgba(17, 17, 18, 0.9);
+                -moz-box-shadow: 0px 0px 20px 20px rgba(17, 17, 18, 0.9);
+                box-shadow: 0px 0px 20px 20px rgba(17, 17, 18, 0.9);
             }
         }
 
@@ -73,6 +78,8 @@ header {
             }
 
             form {
+                display: flex;
+                white-space: nowrap;
                 transition-duration: var(--transitionDuration);
                 transition-property: left, transform;
                 position: absolute;
@@ -83,8 +90,12 @@ header {
                 max-width: 800px;
                 border-radius: var(--borderRadius);
                 background-color: var(--midGrey);
+                -webkit-box-shadow: 0px 0px 20px 8px rgba(17, 17, 18, 0.2);
+                -moz-box-shadow: 0px 0px 20px 8px rgba(17, 17, 18, 0.2);
+                box-shadow: 0px 0px 20px 8px rgba(17, 17, 18, 0.2);
 
-                input {
+                input,
+                button {
                     border: none;
                     border-radius: var(--borderRadius);
                     height: 35px;
@@ -93,19 +104,23 @@ header {
                 }
 
                 input:focus,
-                input:focus-visible {
+                input:focus-visible,
+                button:focus,
+                button:focus-visible {
                     outline: none;
                 }
 
-                input[type="submit"] {
+                button[type="submit"] {
                     border-top-right-radius: 0;
                     border-bottom-right-radius: 0;
+                    display: flex;
+                    align-items: center;
                 }
 
                 input[type="text"] {
                     border-top-left-radius: 0;
                     border-bottom-left-radius: 0;
-                    width: 300px;
+                    width: 400px;
                 }
             }
         }
@@ -131,7 +146,36 @@ header {
 }
 
 @media screen and (max-width: 750px) {
-    /* header div #menue {
-        display: inline-block;
-    } */
+    header div {
+
+        .headerRight {
+            min-width: 0;
+            padding-left: 0;
+
+            &.open form {
+                left: auto;
+                transform: none;
+            }
+
+            form {
+                position: relative;
+                left: auto;
+                top: auto;
+                transform: none;
+
+                input[type="text"] {
+                    width: auto;
+                    min-width: 0;
+                }
+            }
+        }
+
+        .headerLeft {
+            min-width: auto;
+
+            &.open {
+                min-width: auto;
+            }
+        }
+    }
 }

@@ -87,6 +87,7 @@ aside.open {
         transform: translateX(-100%);
         min-width: 300px;
         width: auto;
+        position: fixed;
     }
 
     aside.open {
