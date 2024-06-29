@@ -17,12 +17,16 @@ export default function TopNav({ toggleMenue, menueOpen }) {
         setSearchQuery(target.value);
     }
 
+    const [searchOpen, setSearchOpen] = useState(false);
     function handleSubmit(e) {
         e.preventDefault();
-        console.log("submited", searchQuery);
-        if (searchQuery.length > 0) {
+        if (!searchOpen) {
+            setSearchOpen(true);
+        } else if (searchOpen && searchQuery.length > 0) {
             dispatch(storeSearchQuery(searchQuery));
             dispatch(fetchSearchQuery(searchQuery));
+        } else if (searchOpen && searchQuery.length == 0) {
+            setSearchOpen(false);
         }
     }
 
@@ -41,15 +45,24 @@ export default function TopNav({ toggleMenue, menueOpen }) {
         <header ref={ref}>
             <div>
                 <span className={`headerLeft ${menueOpen ? "open" : ""}`}>
-                    <button id="menue" onClick={toggleMenue}>Menu</button>
+                    <button id="menue" onClick={toggleMenue}>
+                        <span className="word">Menu</span>
+                        <span className="icon">
+                            {menueOpen ?
+                                <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#e8eaed"><path d="m252.62-217.23-35.39-35.39L444.62-480 217.23-707.38l35.39-35.39L480-515.38l227.38-227.39 35.39 35.39L515.38-480l227.39 227.38-35.39 35.39L480-444.62 252.62-217.23Z" /></svg>
+                                :
+                                <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#e8eaed"><path d="M140-254.62v-50.25h680v50.25H140Zm0-200.25v-50.26h680v50.26H140Zm0-200.26v-50.25h680v50.25H140Z" /></svg>
+                            }
+                        </span>
+                    </button>
                 </span>
                 <span className={`headerRight ${menueOpen ? "open" : ""}`}>
                     <h1><button onClick={mainButtonClick}>redditLight</button></h1>
                     <form onSubmit={handleSubmit}>
                         <button type="submit">
-                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF"><path d="M782-82 523-341q-29 20-67.5 32T372-297q-118 0-200.5-82.5T89-580q0-118 82.5-200.5T372-863q118 0 200.5 82.5T655-580q0 46-12 83.5T611-431l260 261-89 88ZM372-423q66 0 111.5-45.5T529-580q0-66-45.5-111.5T372-737q-66 0-111.5 45.5T215-580q0 66 45.5 111.5T372-423Z" /></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M781.69-136.92 530.46-388.16q-30 24.77-69 38.77-39 14-80.69 14-102.55 0-173.58-71.01-71.03-71.01-71.03-173.54 0-102.52 71.01-173.6 71.01-71.07 173.54-71.07 102.52 0 173.6 71.03 71.07 71.03 71.07 173.58 0 42.85-14.38 81.85-14.39 39-38.39 67.84l251.23 251.23-42.15 42.16ZM380.77-395.38q77.31 0 130.96-53.66 53.66-53.65 53.66-130.96t-53.66-130.96q-53.65-53.66-130.96-53.66t-130.96 53.66Q196.15-657.31 196.15-580t53.66 130.96q53.65 53.66 130.96 53.66Z" /></svg>
                         </button>
-                        <input placeholder="Search" onChange={searchChange} value={searchQuery} type="text" />
+                        <input className={`searchInput ${searchOpen ? "open" : ""}`} placeholder="Search" onChange={searchChange} value={searchQuery} type="text" />
                     </form>
                 </span>
                 <span style={{ fontVariantNumeric: "tabular-nums lining-nums", color: "var(--midGrey)" }}>
