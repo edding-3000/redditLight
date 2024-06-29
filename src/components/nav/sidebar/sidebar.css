@@ -103,6 +103,7 @@ aside.open {
         pointer-events: none;
         top: calc(var(--headerHeight)-1px);
         padding-top: 0;
+        max-height: 100svh;
 
         nav {
             -webkit-box-shadow: inset 0 8px 20px 2px rgba(17, 17, 18, 0.9);
