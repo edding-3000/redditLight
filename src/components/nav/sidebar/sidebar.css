@@ -4,7 +4,7 @@ aside {
     top: 0;
     bottom: 0;
     z-index: 98;
-    height: calc(100svh - var(--headerHeight) + 1px);
+    height: calc(100vh - var(--headerHeight) + 1px);
     /* min-width: max(20vw, 265px); */
     /* max-width: 270px; */
     background-color: var(--navBackground);
@@ -137,5 +137,10 @@ aside.open {
             background-color: rgba(17, 17, 18, .9);
             backdrop-filter: blur(15px);
         }
+    }
+
+    body:has(aside.open) {
+        overflow-y: hidden;
+        max-height: 100vh;
     }
 }
