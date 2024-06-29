@@ -129,6 +129,7 @@ header {
                     border-top-left-radius: 0;
                     border-bottom-left-radius: 0;
                     width: 400px;
+                    padding-left: 0;
                 }
             }
         }
@@ -229,6 +230,16 @@ header {
                         &.searchInput.open {
                             width: 100%;
                         }
+                    }
+                }
+
+                h1 {
+                    max-width: 100%;
+                    transition: max-width .25s;
+
+                    &.open {
+                        max-width: 0;
+                        overflow-x: hidden;
                     }
                 }
             }
