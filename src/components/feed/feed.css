@@ -9,3 +9,9 @@
     padding: 0 5px;
     top: calc(var(--headerHeight) + 20px);
 }
+
+@media screen and (max-width: 750px) {
+    .feed {
+        gap: 35px;
+    }
+}

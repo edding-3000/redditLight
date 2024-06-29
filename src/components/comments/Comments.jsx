@@ -20,6 +20,10 @@ const Comments = ({ comments }) => {
 
     console.log(slicedComments);
 
+    if (slicedComments.length == 0) {
+        return;
+    }
+
     if (isLoading) {
         return (
             <CommentSkeleton num={1} />

@@ -10,6 +10,7 @@ import NavLinkSkeleton from "../navLinkSkeleton/NavLinkSkeleton";
 export default function SideBar({ menueOpen }) {
     const dispatch = useDispatch();
     const subRedditLoading = useSelector(subRedditsLoading)
+    const currentSubreddit = useSelector(state => state.reddit.selectedSubreddit);
 
     const subreddits = useSelector(selectSubreddits);
     useEffect(() => {
@@ -32,7 +33,9 @@ export default function SideBar({ menueOpen }) {
                         subreddits.map((subreddit, index) => (
                             <li key={index} >
                                 <button type="button"
+                                    aria-label="button"
                                     onClick={() => dispatch(setSelectedSubreddit(subreddit.display_name_prefixed))}
+                                    className={`${currentSubreddit == subreddit.display_name_prefixed ? "active" : ""}`}
                                 >
                                     <span className="subredditIcon" {...subreddit.icon_img ? { style: { "--profileImg": `url(${subreddit.icon_img})` } } : ""} >
                                         {subreddit.icon_img.length === 0 ? subreddit.title[0] : ""}

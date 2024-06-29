@@ -34,6 +34,16 @@ aside {
                     align-items: center;
                     gap: 10px;
                     transition: background-color .2s;
+
+                    &.active {
+                        transition: background-color .2s;
+                        background-color: var(--blue);
+
+                        /* border: 3px solid var(--blue); */
+                        &:hover {
+                            background-color: var(--blue);
+                        }
+                    }
                 }
 
                 button:hover {

@@ -106,7 +106,7 @@ export default function Post({ post, commentId, setCommentId }) {
                     {selfText ? <SelfText text={selfText} /> : ""}
                     {/* <p className="selfText">{selfText}</p> */}
                     {link ? <a href={link} target="_blank" rel="noopener noreferrer">{link}</a> : ""}{/*link*/}
-                    {imgUrl ? <img src={imgUrl} loading="lazy" /> : ""} {/*image*/}
+                    {imgUrl ? <img src={imgUrl} alt={titleText} loading="lazy" /> : ""} {/*image*/}
                     {/* {is_video ? <video controls loop autoplay="autoplay"><source src={videoUrl} /></video> : ""} hosted:video */}
                     {is_video ? isContainerReady ? (
                         <RedditVideo
