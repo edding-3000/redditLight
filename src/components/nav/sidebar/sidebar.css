@@ -15,6 +15,8 @@ aside {
     nav {
         height: 100%;
         overflow-y: scroll;
+        -webkit-overflow-scrolling: touch;
+        pointer-events: all;
 
         ul {
             padding: 0 15px;
