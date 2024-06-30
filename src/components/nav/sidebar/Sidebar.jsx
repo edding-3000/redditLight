@@ -25,6 +25,10 @@ export default function SideBar({ menueOpen }) {
         if (ref.current.clientWidth > 0) document.documentElement.style.setProperty("--sideBarWidth", ref.current.clientWidth + "px");
     });
 
+    useEffect(() => {
+        document.title = `redditLight${currentSubreddit.length > 0 ? " – " + currentSubreddit : ""}`;
+    }, [currentSubreddit])
+
     return (
         <aside className={menueOpen ? "open" : ""} ref={ref}>
             <nav>
