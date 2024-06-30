@@ -104,6 +104,7 @@ function RedditVideoPlayer(HLSurl, container) {
         muted: true,
         loop: true,
         autoplay: false,
+        playsinline: true,
         controls: true,
         preload: "metadata",
         sources: [

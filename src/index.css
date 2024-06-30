@@ -107,13 +107,38 @@ button:focus-visible {
   :root {
     color: #213547;
     background-color: var(--color);
+    --colorBodycopy: #213547;
+    /* --grey: #a6a7af;
+    --midGrey: #7a7a7a;
+    --lightGrey: #303030;*/
+    --ultraLightGrey: #f1f1f1;
   }
 
   a:hover {
     color: var(--lightBlue);
   }
 
-  button {
+  button,
+  .postButton {
+    color: var(--color) !important;
+  }
+
+  .commentBody {
+    button {
+      background-color: transparent;
+      color: var(--background) !important;
+    }
+  }
+
+  .creditBar {
+
+    p,
+    a {
+      color: var(--lightGrey);
+    }
+  }
+
+  .postContainer:hover {
     background-color: var(--ultraLightGrey);
   }
 }
