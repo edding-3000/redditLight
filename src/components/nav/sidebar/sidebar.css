@@ -4,7 +4,7 @@ aside {
     top: 0;
     bottom: 0;
     z-index: 98;
-    height: calc(100vh - var(--headerHeight) + 1px);
+    height: calc(100dvh - var(--headerHeight) + 1px);
     /* min-width: max(20vw, 265px); */
     /* max-width: 270px; */
     background-color: var(--navBackground);
